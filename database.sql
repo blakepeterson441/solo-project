@@ -4,8 +4,8 @@ CREATE TABLE users (
 	password VARCHAR(64)
 );
 
-INSERT INTO users (id, username, password)
-VALUES (1, 'blake', '1234'), (2, 'aRealPerson', '1234'), (3, 'bot', '1234');
+INSERT INTO users (username, password)
+VALUES ('blake', '1234'), ('aRealPerson', '1234'), ('bot', '1234');
 
 CREATE TABLE friends (
 	id SERIAL PRIMARY KEY,
@@ -14,8 +14,8 @@ CREATE TABLE friends (
 	approved boolean
 );
 
-INSERT INTO friends (id, user_id_one, user_id_two, approved)
-VALUES (1, 1, 2, true);
+INSERT INTO friends (user_id_one, user_id_two, approved)
+VALUES (1, 2, true);
 
 CREATE TABLE user_games (
 	id SERIAL PRIMARY KEY NOT NULL,
@@ -27,16 +27,16 @@ CREATE TABLE user_games (
 	aggression int
 );
 
-INSERT INTO user_games ( id, user_id, game_id, overall_skill, offensive_skill, defensive_skill, aggression)
-VALUES (1, 1, 1, 6, 5, 7, 5), (2, 2, 1, 6, 7, 5, 8), (3, 3, 1, 8, 8, 5, 7);
+INSERT INTO user_games ( user_id, game_id, overall_skill, offensive_skill, defensive_skill, aggression)
+VALUES (1, 1, 6, 5, 7, 5), (2, 1, 6, 7, 5, 8), (3, 1, 8, 8, 5, 7);
 
 CREATE TABLE games (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(80)
 );
 
-INSERT INTO games (id, name)
-VALUES (1, 'Rocket League');
+INSERT INTO games (name)
+VALUES ('Rocket League');
 
 CREATE TABLE messages (
 	id SERIAL PRIMARY KEY,
@@ -45,12 +45,11 @@ CREATE TABLE messages (
 	message VARCHAR(240)
 );
 
-INSERT INTO messages (id, user_id_one, user_id_two, message)
-VALUES (1, 1, 2, 'Hey, lets play!');
+INSERT INTO messages (user_id_one, user_id_two, message)
+VALUES (1, 2, 'Hey, lets play!');
 
-SELECT users.username, games.name AS game, user_games.overall_skill AS Overall, 
-user_games.offensive_skill AS Offense, user_games.defensive_skill AS Defense, 
-user_games.aggression AS Aggression
+SELECT users.username, games.name AS game, user_games.overall_skill AS overall, user_games.offensive_skill AS offense, user_games.defensive_skill AS defense, user_games.aggression AS aggression
 FROM games
 JOIN user_games ON user_games.game_id = games.id
 JOIN users ON users.id = user_games.user_id;
+
